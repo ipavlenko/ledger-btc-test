@@ -1,0 +1,51 @@
+<div class="hello">
+  <div>
+    <div><b>Path:</b></div>
+    <div><input type="text" v-model="path" @input="handleReset" /></div>
+  </div>
+  <div v-if="fromAddress">
+    <div><b>From:</b></div>
+    <div>{{fromAddress}}</div>
+  </div>
+  <div v-if="fromAddress">
+    <div><b>To:</b></div>
+    <div>
+      <input type="text" v-model="toAddress" @input="handleToUpdate"/>
+      <a href="#" @click.prevent="handleDefaultTo">mt7r5FKWoKXPtAdkuCYm3AyoQk4vyxUdYA</a>
+    </div>
+  </div>
+  <div v-if="toAddress && utxos && !!utxos.length">
+    <div><b>Value (BTC):</b></div>
+    <div><input type="text" v-model="value" @input="handleValueUpdate"/></div>
+  </div>
+  <div v-if="fee != null">
+    <div><b>Fee:</b></div>
+    <div>{{fee}}</div>
+  </div>
+  <div v-if="prepareError">
+    <div><b>Prepare TX Error:</b></div>
+    <div>{{prepareError}}</div>
+  </div>
+  <div v-if="utxos">
+    <div><b>UTXOs:</b></div>
+    <pre>{{utxos}}</pre>
+  </div>
+  <div v-if="fromAddress">
+    <div><b>Raw Tx in HEX:</b></div>
+    <div><textarea v-model="rawHex" readonly cols="80" rows="5"></textarea></div>
+  </div>
+  <div v-if="fromAddress">
+    <div><b>Signed Tx in HEX:</b></div>
+    <div><textarea v-model="signedHex" readonly cols="80" rows="5"></textarea></div>
+  </div>
+  <div>
+    <button v-if="!fromAddress" @click="handleConnect">Connect</button>
+    <button v-if="fromAddress" @click="handleReset">Reset</button>
+    <button v-if="rawHex" @click="handleSignTx">Sign Tx</button>
+    <button v-if="signedHex" @click="handleBroadcastTx">Broadcast Tx</button>
+  </div>
+  <div v-if="!!history.length">
+    <div><b>History:</b></div>
+    <div v-for="item in history">{{item.hash}}</div>
+  </div>
+</div>
